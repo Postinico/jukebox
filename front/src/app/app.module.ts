@@ -20,6 +20,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AlbumComponent } from './pages/album/album.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { AlbumComponent } from './pages/album/album.component';
     MatDialogModule,
     FormsModule,
     MatProgressBarModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

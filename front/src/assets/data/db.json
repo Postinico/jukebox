@@ -1,0 +1,16 @@
+{
+    "generos": [
+      {
+        "Id ": 1,
+        "Titulo": "Eletrônica"
+      },
+      {
+        "Id ": 2,
+        "Titulo": "Samba"
+      },
+      {
+        "Id ": 3,
+        "Titulo": "Forró"
+      }
+    ]
+  }

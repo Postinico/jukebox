@@ -5,6 +5,8 @@ import { AutenticarViewModel } from 'src/app/models/ViewModels/AutenticarViewMod
 import { MatDialog } from '@angular/material/dialog';
 import { AutenticarService } from './autenticar.service';
 import { MessageService } from 'src/app/services/message.service';
+import { GeneroService } from 'src/app/services/genero.service';
+import { GeneroViewModel } from 'src/app/models/ViewModels/GeneroViewModel';
 
 @Component({
   selector: 'autenticar',
@@ -28,6 +30,7 @@ export class AutenticarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+   
   }
 
   login() {
