@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -34,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
     AlbumComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,

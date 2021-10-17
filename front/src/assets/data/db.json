@@ -1,15 +1,15 @@
 {
     "generos": [
       {
-        "Id ": 1,
+        "Id": 1,
         "Titulo": "Eletrônica"
       },
       {
-        "Id ": 2,
+        "Id": 2,
         "Titulo": "Samba"
       },
       {
-        "Id ": 3,
+        "Id": 3,
         "Titulo": "Forró"
       }
     ]

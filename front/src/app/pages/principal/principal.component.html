@@ -7,26 +7,21 @@
     <br><br><br>
 
     <div class="row">
-   
+
         <div class="col-sm">
         </div>
 
         <div class="col-sm text-center">
-           
-            <mat-form-field appearance="fill" >
 
-
+            <mat-form-field appearance="fill">
                 <mat-label>Selecionar genero</mat-label>
-
-                <mat-select disableRipple>
-
-                    <mat-option value="i" *ngFor="let genero of generos ; let i = index">{{ genero.Titulo }}
+                <mat-select disableRipple (selectionChange)="GeneroSelecionado($event)" >
+                    <mat-option *ngFor="let genero of generos" [value]="genero.Titulo">
+                        {{genero.Titulo}}
                     </mat-option>
-
                 </mat-select>
-
-
             </mat-form-field>
+
         </div>
 
         <div class="col-sm">
