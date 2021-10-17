@@ -4,6 +4,31 @@
 
 <div class="container">
 
+    <br><br><br>
+
+    <div class="row">
+
+        <div class="col-sm">
+        </div>
+
+        <div class="col-sm text-center">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Selecionar genero</mat-label>
+                <mat-select disableRipple (selectionChange)="GeneroSelecionado($event)" >
+                    <mat-option *ngFor="let genero of generos" [value]="genero.Titulo">
+                        {{genero.Titulo}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div class="col-sm">
+        </div>
+
+    </div>
+
     <div class="row">
 
         <div class="col-sm">
@@ -15,7 +40,7 @@
         <div class="col-sm">
             <app-album></app-album>
         </div>
-     
+
     </div>
 
 </div>
