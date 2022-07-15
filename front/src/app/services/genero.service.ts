@@ -11,16 +11,17 @@ import { GeneroViewModel } from '../models/ViewModels/GeneroViewModel';
 })
 export class GeneroService {
 
-  url = 'http://localhost:3000/generos'; // api rest fake
+  url = 'https://localhost:44389/api/generos'; // api rest fake
 
   constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}`  })
   }
 
   obterGeneros(): Observable<GeneroViewModel[]> {
-    return this.httpClient.get<GeneroViewModel[]>(this.url)
+    console.log(localStorage.getItem('token'));
+    return this.httpClient.get<GeneroViewModel[]>(this.url,this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError))

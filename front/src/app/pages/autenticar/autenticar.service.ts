@@ -10,13 +10,13 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class AutenticarService {
 
-  url = 'https://localhost:5001/api/autenticar/login'; // api rest fake
+  url = 'https://localhost:44389/api/autenticar/login'; // api rest fake
   
   constructor(private httpClient: HttpClient) { }
 
   // Headers
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
 
  // salva um carro

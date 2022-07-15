@@ -1,8 +1,8 @@
 export class GeneroViewModel {
 
     constructor(
-        public Id: string,
-        public Titulo: string
+        public id: string,
+        public titulo: string
     ) { }
 
 }

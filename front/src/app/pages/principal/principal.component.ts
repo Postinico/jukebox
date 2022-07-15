@@ -13,7 +13,7 @@ import { GeneroService } from 'src/app/services/genero.service';
 export class PrincipalComponent implements OnInit {
 
   public generos: GeneroViewModel[] = [];
-  genero: GeneroViewModel | undefined = { Id: '', Titulo: '' };
+  genero: GeneroViewModel | undefined = { id: '', titulo: '' };
 
 
   constructor(private _generoServico: GeneroService) { }
@@ -32,9 +32,9 @@ export class PrincipalComponent implements OnInit {
 
   GeneroSelecionado(valor: any) {
     console.log(valor.value);
-    this.genero = this.generos.find(g => g.Id === valor.value);
-    var result = this.generos.filter(function (o) { return o.Titulo == valor.value; });
-    const titulo = result[0].Id;
+    this.genero = this.generos.find(g => g.id === valor.value);
+    var result = this.generos.filter(function (o) { return o.titulo == valor.value; });
+    const titulo = result[0].id;
     console.log(titulo);
   }
 }

@@ -30,7 +30,7 @@ export class AutenticarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   
+
   }
 
   login() {
@@ -39,8 +39,8 @@ export class AutenticarComponent implements OnInit {
     this.autenticar.senha = this.senha;
 
     console.log(this.autenticar);
-    this.router.navigate(['/main/']);
-    
+    //this.router.navigate(['/main/']);
+
     this._autenticarService.login(this.autenticar).subscribe(
       sucesso => { this.entrar(sucesso); console.log(sucesso) },
       falha => { this.entrar(falha); console.log(falha) }
@@ -48,9 +48,9 @@ export class AutenticarComponent implements OnInit {
   }
 
   entrar(loginOn: AutenticarViewModel) {
-   
-    if (loginOn.token != null) {
 
+    if (loginOn.token != null) {
+      console.log('1');
       localStorage.setItem('token', loginOn.token);
 
       localStorage.setItem('usuario', loginOn.usuario.nome);

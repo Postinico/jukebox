@@ -16,8 +16,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Selecionar genero</mat-label>
                 <mat-select disableRipple (selectionChange)="GeneroSelecionado($event)" >
-                    <mat-option *ngFor="let genero of generos" [value]="genero.Titulo">
-                        {{genero.Titulo}}
+                    <mat-option *ngFor="let genero of generos" [value]="genero.titulo">
+                        {{genero.titulo}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
