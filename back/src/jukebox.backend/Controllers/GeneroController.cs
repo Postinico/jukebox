@@ -151,10 +151,13 @@ namespace jukebox.backend.Controllers
             {
                 return NotFound(new ResultViewModel(false, "Gênero não localizado!", id));
             }
+            else
+            {
+                _dbContext.Remove(genero);
+                _dbContext.SaveChanges();
 
-            _dbContext.SaveChanges();
-
-            return NoContent();
+                return NoContent();
+            }
         }
     }
 }

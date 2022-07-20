@@ -91,16 +91,16 @@ namespace jukebox.backend.Controllers
         /// </summary>
         /// <returns>Albuns por genero Id </returns>
         /// <remarks>Buscar!</remarks>
-        /// <param name="GeneroId" example="011">Genero Id</param>
-        [HttpGet("{GeneroId}")]
+        /// <param name="generoId" example="011">Genero Id</param>
+        [HttpGet("obter-generoid/{generoId}")]
         [Authorize]
         [Authorize(Roles = "empregado, gerente")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public IActionResult ObterGeneroId(long id)
+        public IActionResult ObterGeneroId(long generoId)
         {
-            var albuns = _dbContext.Albuns.Where(c => c.GeneroId == id).Include(f => f.Genero).ToList();
+            var albuns = _dbContext.Albuns.Where(c => c.GeneroId == generoId).Include(f => f.Genero).ToList();
 
             if (albuns == null)
                 return NotFound();
