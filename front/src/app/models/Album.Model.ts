@@ -1,7 +1,8 @@
 export class Album {
 
 constructor(
-    public albumId: string,
+    public id: string,
+    public titulo: string,
     public descricao: string,
     public capaUrl: string,
     public votos: number,

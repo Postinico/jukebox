@@ -21,7 +21,7 @@ import { LoadingComponent } from './pages/loading/loading.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AlbumComponent } from './pages/album/album.component';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
   imports: [
     ReactiveFormsModule,
     BrowserModule,
+    MatCardModule,
     AppRoutingModule,
     NgbModule,
     MatToolbarModule,
@@ -53,4 +54,5 @@ import { MatSelectModule } from '@angular/material/select';
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
