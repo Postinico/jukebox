@@ -10,6 +10,7 @@ export class CabecalhoComponent implements OnInit {
   usuarioNome: {} | undefined;
 
   saudacoes: string = '';
+  saudacoesIcon: string = '';
 
   constructor() { }
 
@@ -27,6 +28,7 @@ export class CabecalhoComponent implements OnInit {
     if (hora >= 6 && hora <= 11) {
 
       this.saudacoes = 'BOM DIA';
+      this.saudacoesIcon ='sunny'
 
     }
     else {
@@ -34,11 +36,13 @@ export class CabecalhoComponent implements OnInit {
       if (hora >= 12 && hora <= 17) {
 
         this.saudacoes = 'BOA TARDE';
+        this.saudacoesIcon ='sunny'
 
       }
       else {
 
         this.saudacoes = 'BOA NOITE';
+        this.saudacoesIcon ='bedtime';
 
       }
 

@@ -15,13 +15,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AlbumComponent } from './pages/album/album.component';
 import { MatSelectModule } from '@angular/material/select';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { RatingModule } from 'ng-starrating';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {MatCardModule} from '@angular/material/card';
   imports: [
     ReactiveFormsModule,
     BrowserModule,
+    RatingModule,
     MatCardModule,
     AppRoutingModule,
     NgbModule,

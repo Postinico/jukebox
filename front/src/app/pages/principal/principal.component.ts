@@ -4,6 +4,7 @@ import { GeneroViewModel } from 'src/app/models/ViewModels/GeneroViewModel';
 import { AlbumService } from 'src/app/services/album.service';
 import { Router } from '@angular/router';
 import { GeneroService } from 'src/app/services/genero.service';
+import { StarRatingComponent } from 'ng-starrating';
 
 @Component({
   selector: 'app-principal',
@@ -55,5 +56,12 @@ export class PrincipalComponent implements OnInit {
         this.albuns.push(a[i]);
       }
     });
+  }
+
+  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
+    alert(`Old Value:${$event.oldValue}, 
+      New Value: ${$event.newValue}, 
+      Checked Color: ${$event.starRating.checkedcolor}, 
+      Unchecked Color: ${$event.starRating.uncheckedcolor}`);
   }
 }
