@@ -1,3 +1,44 @@
-.mat-option.mat-active {
-    background: red !important;
-  }
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgb(255, 255, 255) !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: rgb(255, 255, 255) !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: rgb(255, 255, 255) !important;
+}
+
+.mat-select{
+  color: rgb(255, 255, 255) !important;
+}
+
+.example-card {
+  display: block;
+  background: #FFFFFF;
+  width: 300px;
+  height: 570px;
+  border-radius: 15px;
+  margin: 10px;
+  display: inline-block;
+  align: center;
+  transition: all .25s linear;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+.mat-card:hover{
+  box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.8);
+}
+
+.mat-card-content{
+  background: #FFFFFF;
+}
+
+.mat-card-content{
+  background: #FFFFFF;
+}
+

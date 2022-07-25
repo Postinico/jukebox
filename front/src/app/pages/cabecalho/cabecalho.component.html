@@ -1,14 +1,12 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
 
-    <mat-toolbar-row>
-
-        <span>Juke Box</span>
-
-        <span class="example-spacer"></span>
-
-        <span class="label label-primary">{{ saudacoes }}</span>
-
-
-    </mat-toolbar-row>
-
+    <span>Juke Box</span>
+    
+    <span class="example-spacer"></span>
+    <mat-icon>{{ saudacoesIcon }} </mat-icon>
+    <span class="label label-primary"> {{ saudacoes }}</span>
+ 
 </mat-toolbar>

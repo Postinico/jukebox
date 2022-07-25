@@ -14,7 +14,7 @@
         <div class="col-sm text-center">
 
             <mat-form-field appearance="fill">
-                <mat-label>Selecionar genero</mat-label>
+                <mat-label>Selecionar gênero</mat-label>
                 <mat-select disableRipple (click)="generoEnter()" 
                     (selectionChange)="generoSelecionado($event)">
                     <mat-option *ngFor="let genero of generos" [value]="genero.titulo">
@@ -31,7 +31,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm" *ngFor="let album of albuns">
+        <div class="col-sm"  *ngFor="let album of albuns">
             <mat-card class="example-card">
                 <mat-card-header>
                     <div mat-card-avatar class="example-header-image"></div>
@@ -48,8 +48,9 @@
                     </p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
+                    <p><star-rating [value]="5" [totalstars]="5" checkedcolor="red" uncheckedcolor="black" size="24px" [readonly]="false" (rate)="onRate($event)"></star-rating></p>
+                    <button mat-raised-button color="primary">CURTIR</button>
+                    <button mat-button align="right">COMPARTILHAR</button>
                 </mat-card-actions>
             </mat-card>
         </div>
