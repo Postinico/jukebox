@@ -21,7 +21,8 @@ export class AlbumService {
     console.log(localStorage.getItem('token'));
     return this.httpClient.get<Album[]>(this.url+generoid,this.httpOptions)
       .pipe(
-        retry(2))
+        retry(2),
+        catchError(this.handleError))
   }
 
    handleError(error: HttpErrorResponse) {

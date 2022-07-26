@@ -5,6 +5,7 @@ import { AlbumService } from 'src/app/services/album.service';
 import { Router } from '@angular/router';
 import { GeneroService } from 'src/app/services/genero.service';
 import { StarRatingComponent } from 'ng-starrating';
+import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 
 @Component({
   selector: 'app-principal',
@@ -16,7 +17,6 @@ export class PrincipalComponent implements OnInit {
 
   public generos: GeneroViewModel[] = [];
   public albuns: Album[] = [];
-
   genero: GeneroViewModel | undefined = { id: '', titulo: '' };
 
   constructor(private router: Router, private _generoServico: GeneroService, private _albumServico: AlbumService) { }
@@ -33,8 +33,8 @@ export class PrincipalComponent implements OnInit {
       },
       erro => {
         if (erro.status == 401) {
-          localStorage.clear();
           this.router.navigate(['/autenticar/']);
+          console.log('passei aqui e token vazio');
         }
       }
     );
@@ -58,7 +58,7 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
-  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
+  onRate($event: { oldValue: number, newValue: number, starRating: StarRatingComponent }) {
     alert(`Old Value:${$event.oldValue}, 
       New Value: ${$event.newValue}, 
       Checked Color: ${$event.starRating.checkedcolor}, 

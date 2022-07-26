@@ -15,8 +15,7 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Selecionar gênero</mat-label>
-                <mat-select disableRipple (click)="generoEnter()" 
-                    (selectionChange)="generoSelecionado($event)">
+                <mat-select disableRipple (click)="generoEnter()" (selectionChange)="generoSelecionado($event)">
                     <mat-option *ngFor="let genero of generos" [value]="genero.titulo">
                         {{genero.titulo}}
                     </mat-option>
@@ -29,31 +28,36 @@
         </div>
 
     </div>
-
-    <div class="row">
-        <div class="col-sm"  *ngFor="let album of albuns">
-            <mat-card class="example-card">
-                <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
-                    <mat-card-title>{{album.titulo}}</mat-card-title>
-                    <mat-card-subtitle>{{album.descricao}}</mat-card-subtitle>
-                </mat-card-header>
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                    alt="Photo of a Shiba Inu">
-                <mat-card-content>
-                    <p>
-                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                        bred for hunting.
-                    </p>
-                </mat-card-content>
-                <mat-card-actions>
-                    <p><star-rating [value]="5" [totalstars]="5" checkedcolor="red" uncheckedcolor="black" size="24px" [readonly]="false" (rate)="onRate($event)"></star-rating></p>
-                    <button mat-raised-button color="primary">CURTIR</button>
-                    <button mat-button align="right">COMPARTILHAR</button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-    </div>
-
 </div>
+
+<mat-carousel [maintainAspectRatio]="true" timings="250ms ease-in" [proportion]="35" [autoplay]="true" color="primary"
+    [loop]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="false" [useMouseWheel]="false"
+    orientation="ltr">
+    <mat-carousel-slide #matCarouselSlide *ngFor="let album of albuns; let i = index" overlayColor="#00000120"
+        [hideOverlay]="true">
+     <table align="center">
+        <tr>
+            <td *ngFor="let album of albuns">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <div mat-card-avatar class="example-header-image"></div>
+                        <mat-card-title>{{album.titulo}}</mat-card-title>
+                        <mat-card-subtitle>{{album.descricao}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                        alt="Photo of a Shiba Inu">
+                    <mat-card-actions>
+                        <p>
+                            <star-rating [value]="5" [totalstars]="5" checkedcolor="red" uncheckedcolor="black"
+                                size="24px" [readonly]="false" (rate)="onRate($event)"></star-rating>
+                        </p>
+                        <button mat-raised-button color="primary">CURTIR</button>
+                        <button mat-button align="right">COMPARTILHAR</button>
+                    </mat-card-actions>
+                </mat-card>
+            </td>
+        </tr>
+     </table>
+    </mat-carousel-slide>
+</mat-carousel>
+
