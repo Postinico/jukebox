@@ -37,24 +37,25 @@ export class AutenticarComponent implements OnInit {
     this.autenticar.senha = this.senha;
 
     console.log(this.autenticar);
-    //this.router.navigate(['/main/']);
+    console.log('objeto');
 
     this._autenticarService.login(this.autenticar).subscribe(
-      sucesso => { this.entrar(sucesso); console.log(sucesso) },
-      falha => { this.entrar(falha); console.log(falha) }
+      sucesso => { this.entrar(sucesso); },
+      falha => { this.entrar(falha); }
     );
   }
 
   entrar(loginOn: AutenticarViewModel) {
 
     if (loginOn.token != null) {
-      console.log('1');
-      localStorage.setItem('token', loginOn.token);
 
+      localStorage.setItem('token', loginOn.token);
       localStorage.setItem('usuario', loginOn.usuario.nome);
 
-      this.router.navigate(['/main/']);
+      console.log(localStorage.getItem('token'));
+      console.log('local storege');
 
+      this.router.navigate(['/main/']);
     }
     else {
 

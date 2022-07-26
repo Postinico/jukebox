@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~12.1.2",
     "@angular/router": "~12.1.2",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@ngmodule/material-carousel": "^0.6.0",
     "@sweetalert2/ngx-sweetalert2": "^10.0.0",
     "angular-star-rating": "^6.0.0",
     "bootstrap": "^4.5.0",
