@@ -42,6 +42,7 @@ export class PrincipalComponent implements OnInit {
 
   generoEnter() {
     this.obterGeneros();
+    console.log('passei no enter');
   }
 
   generoSelecionado(valor: any) {
