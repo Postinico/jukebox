@@ -14,11 +14,10 @@ import { MessageService } from 'src/app/services/message.service';
 export class AutenticarComponent implements OnInit {
 
   autenticar: PostAutenticar = { email: '', senha: '' };
+  acesso: AutenticarViewModel = { token: '', usuario: { email: '', funcao: '', nome: '', perfilId: '', senha: '', usuarioId: '' } };
   email: string = '';
   senha: string = '';
   carregando: boolean = false;
-
-  acesso: AutenticarViewModel = { token: '', usuario: { email: '', funcao: '', nome: '', perfilId: '', senha: '', usuarioId: '' } };
 
   constructor(
     private router: Router,
@@ -28,16 +27,16 @@ export class AutenticarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    if (localStorage.getItem('token') != null) {
+      localStorage.clear();
+      window.location.reload();
+    }
   }
 
   login() {
     this.carregando = true;
     this.autenticar.email = this.email;
     this.autenticar.senha = this.senha;
-
-    console.log(this.autenticar);
-    console.log('objeto');
 
     this._autenticarService.login(this.autenticar).subscribe(
       sucesso => { this.entrar(sucesso); },
@@ -50,23 +49,19 @@ export class AutenticarComponent implements OnInit {
     if (loginOn.token != null) {
 
       localStorage.setItem('token', loginOn.token);
+      
       localStorage.setItem('usuario', loginOn.usuario.nome);
-
-      console.log(localStorage.getItem('token'));
-      console.log('local storege');
-
+      
       this.router.navigate(['/main/']);
+
     }
     else {
-
-      console.log('erro login');
 
       this.carregando = false;
 
       this._msgService.mensagemErro('usuário ou senha não existe!');
 
     }
-
   }
 }
 
