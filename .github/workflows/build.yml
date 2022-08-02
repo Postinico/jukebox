@@ -1,67 +1,24 @@
-on:
-  push:
-    branches:
-    - '*'
-  paths:
-    include:
-    - back/jukebox/*
-pool:
-  vmImage: 'ubuntu-latest'    
+name: dotnet package
 
+on: [push]
 
+jobs:
+  build:
 
-variables:
-  dockerRegistryServiceConnection:  ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-  imageRepository: 'status.publicar.toutbox.worker'
-  containerRegistry: 'passarelacontainers.azurecr.io'
-  projectPath: '$(Build.SourcesDirectory)/backend/Status.Publicar.Toutbox.Worker/*.csproj'
-  dockerfilePath: '$(Build.SourcesDirectory)/src/Status.Publicar.Toutbox.Worker/Dockerfile'
-  nugetfilePath: '$(Build.SourcesDirectory)/src/Status.Publicar.Toutbox.Worker/nuget.config'
-  tag: '$(Build.BuildId)'
-  buildConfiguration: 'Release'
-  vmImageName: 'ubuntu-latest'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
 
-stages:
-- stage: BuildTest
-  displayName: Build and Tests
-  jobs:
-    - job: BuildTest
-      displayName: Build and Tests
-      pool:
-        vmImage: $(vmImageName)
-
-      steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Restore...'
-        inputs:
-          command: 'restore'
-          projects: $(projectPath)
-          feedsToUse: config
-          nugetConfigPath: $(nugetfilePath)
-
-      - task: DotNetCoreCLI@2
-        displayName: 'Build...'
-        inputs:
-          command: 'build'
-          projects: $(projectPath)
-          arguments: '--configuration $(buildConfiguration)'
-
-- stage: Build
-  dependsOn: BuildTest
-  displayName: Build and Push
-  jobs:
-  - job: Build
-    displayName: Build and Push...
-    pool:
-      vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-          lastest
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
