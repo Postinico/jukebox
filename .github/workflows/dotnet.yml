@@ -1,5 +1,13 @@
 name: .NET
 
+variables:
+  projectPath: '$back/src/jukebox.backend/*.csproj'
+  dockerfilePath: '$back/src/jukebox.backend/Dockerfile'
+  nugetfilePath: '$back/src/jukebox.backend/nuget.config'
+  tag: '$(Build.BuildId)'
+  buildConfiguration: 'Release'
+  vmImageName: 'ubuntu-latest'
+  
 on:
   push:
     branches: [ "main" ]
@@ -18,7 +26,12 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+    inputs:
+        command: 'restore'
+        projects: $(projectPath)
+        feedsToUse: config
+        nugetConfigPath: $(nugetfilePath)
+    
     - name: Build
       run: dotnet build --no-restore
     - name: Test
