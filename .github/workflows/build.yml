@@ -1,32 +1,65 @@
-# The "build" job
-build-docker:
-  runs-on: ubuntu-latest
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - backend/jukebox/*
+pool:
+  vmImage: 'ubuntu-latest'    
 
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+variables:
+  dockerRegistryServiceConnection:  ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+  imageRepository: 'status.publicar.toutbox.worker'
+  containerRegistry: 'passarelacontainers.azurecr.io'
+  projectPath: '$(Build.SourcesDirectory)/backend/Status.Publicar.Toutbox.Worker/*.csproj'
+  dockerfilePath: '$(Build.SourcesDirectory)/src/Status.Publicar.Toutbox.Worker/Dockerfile'
+  nugetfilePath: '$(Build.SourcesDirectory)/src/Status.Publicar.Toutbox.Worker/nuget.config'
+  tag: '$(Build.BuildId)'
+  buildConfiguration: 'Release'
+  vmImageName: 'ubuntu-latest'
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+stages:
+- stage: BuildTest
+  displayName: Build and Tests
+  jobs:
+    - job: BuildTest
+      displayName: Build and Tests
+      pool:
+        vmImage: $(vmImageName)
 
-    - name: Setup Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
+      steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore...'
+        inputs:
+          command: 'restore'
+          projects: $(projectPath)
+          feedsToUse: config
+          nugetConfigPath: $(nugetfilePath)
 
-    - name: Build and Push Docker Image
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ./Dockerfile
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: toanbk21096/go-github-actions:latest
-        cache-from: type=registry,ref=toanbk21096/go-github-actions:latest
-        cache-to: type=inline
+      - task: DotNetCoreCLI@2
+        displayName: 'Build...'
+        inputs:
+          command: 'build'
+          projects: $(projectPath)
+          arguments: '--configuration $(buildConfiguration)'
 
-    - name: Deploy Image
-      run: echo ${{ steps.docker_build.outputs.digest }}
+- stage: Build
+  dependsOn: BuildTest
+  displayName: Build and Push
+  jobs:
+  - job: Build
+    displayName: Build and Push...
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          lastest
