@@ -8,6 +8,11 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'    
 
+on:
+  push:
+    branches:
+    - '*'
+
 variables:
   dockerRegistryServiceConnection:  ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
   imageRepository: 'status.publicar.toutbox.worker'
