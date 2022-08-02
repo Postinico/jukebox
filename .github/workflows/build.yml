@@ -4,7 +4,7 @@ on:
     - '*'
   paths:
     include:
-    - backend/jukebox/*
+    - back/jukebox/*
 pool:
   vmImage: 'ubuntu-latest'    
 
