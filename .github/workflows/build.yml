@@ -1,0 +1,46 @@
+name: CICD
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - dev
+  pull_request:
+    branches:
+      - main
+      - staging
+      - dev
+# The "build" job
+build-docker:
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Setup Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build and Push Docker Image
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ./Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: toanbk21096/go-github-actions:latest
+        cache-from: type=registry,ref=toanbk21096/go-github-actions:latest
+        cache-to: type=inline
+
+    - name: Deploy Image
+      run: echo ${{ steps.docker_build.outputs.digest }}
