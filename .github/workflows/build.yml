@@ -1,17 +1,14 @@
-trigger:
-  branches:
-    include:
-    - main
+on:
+  push:
+    branches:
+    - '*'
   paths:
     include:
     - backend/jukebox/*
 pool:
   vmImage: 'ubuntu-latest'    
 
-on:
-  push:
-    branches:
-    - '*'
+
 
 variables:
   dockerRegistryServiceConnection:  ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
