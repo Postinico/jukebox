@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace jukebox.backend.Persistence.Configurations
 {
-    public class UsuarioDbConfiguration : IEntityTypeConfiguration<Usuario>
+    public class MusicaDbConfiguration : IEntityTypeConfiguration<Musica>
     {
-        public void Configure(EntityTypeBuilder<Usuario> builder)
+        public void Configure(EntityTypeBuilder<Musica> builder)
         {
             builder
-               .HasKey(c => c.UsuarioId);
+               .HasKey(c => c.Id);
         }
     }
 }

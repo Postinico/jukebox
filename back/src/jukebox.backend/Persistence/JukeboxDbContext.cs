@@ -1,6 +1,7 @@
 ﻿using jukebox.backend.Models;
-using Microsoft.EntityFrameworkCore;
+
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace jukebox.backend.Persistence
 {
@@ -11,6 +12,8 @@ namespace jukebox.backend.Persistence
         public DbSet<Album> Albuns { get; set; }
 
         public DbSet<Genero> Generos { get; set; }
+
+        public DbSet<Musica> Musicas { get; set; }
 
         public DbSet<Usuario> Usuarios { get; set; }
 
