@@ -1,14 +1,14 @@
-﻿using jukebox.backend.Models;
-using jukebox.backend.ViewModels;
-using jukebox.backend.Persistence;
+﻿using FluentValidation;
 using jukebox.backend.InputModels;
-
-using System;
-using System.Net;
-using System.Linq;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+using jukebox.backend.Models;
+using jukebox.backend.Persistence;
+using jukebox.backend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Net;
+
 
 namespace jukebox.backend.Controllers
 {
@@ -18,10 +18,14 @@ namespace jukebox.backend.Controllers
         private readonly JukeboxDbContext _dbContext;
 
         public IValidator<PostMusicaInputModel> _validadorPost;
+        public IValidator<PutMusicaInputModel> _validadorPut;
 
-        public MusicaController(JukeboxDbContext dbContext)
+        public MusicaController(JukeboxDbContext dbContext, IValidator<PostMusicaInputModel> validadorPost,
+            IValidator<PutMusicaInputModel> validadorPut)
         {
             _dbContext = dbContext;
+            _validadorPost = validadorPost;
+            _validadorPut = validadorPut;
         }
 
         /// <summary>
@@ -129,6 +133,67 @@ namespace jukebox.backend.Controllers
             }
 
             return BadRequest(new ResultViewModel(false, "Album não existe!", musicaIM.AlbumId));
+        }
+
+        /// <summary>
+        /// Alterar música
+        /// </summary>
+        /// <remarks>Alterar!</remarks>
+        /// <param name="id" example="123e4567-e89b-12d3-a456-426655440000">Album Id</param>
+        [HttpPut("{id}")]
+        [Authorize]
+        [Authorize(Roles = "empregado, gerente")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public IActionResult Alterar(Guid id, [FromBody] PutMusicaInputModel musicaIM)
+        {
+            if (!_validadorPut.Validate(musicaIM).IsValid)
+                return BadRequest(new ResultViewModel(false, _validadorPut.Validate(musicaIM).Errors[0].ErrorMessage, musicaIM));
+
+            var musica = _dbContext.Musicas
+                .SingleOrDefault(c => c.Id == id);
+
+            if (musica == null)
+                return NotFound(new ResultViewModel(false, "Música não existe!", id));
+
+            var album = _dbContext.Albuns.Find(musicaIM.AlbumId);
+            if (album == null)
+                return NotFound(new ResultViewModel(false, "Album não existe!", musicaIM.AlbumId));
+
+            musica.Update(musicaIM.Nome, musicaIM.YoutubeUrl, musicaIM.AlbumId, musicaIM.Votos);
+
+            _dbContext.SaveChanges();
+
+            return Accepted(new ResultViewModel(true, "Música alterada com sucesso!", musicaIM.Nome));
+        }
+
+        /// <summary>
+        /// Deletar música
+        /// </summary>
+        /// <remarks>Deletar!</remarks>
+        [HttpDelete("{id}")]
+        [Authorize]
+        [Authorize(Roles = "gerente")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public IActionResult Excluir(Guid id)
+        {
+            var musica = _dbContext.Musicas.SingleOrDefault(c => c.Id == id);
+
+            if (musica == null)
+                return NotFound();
+
+            _dbContext.Musicas.Remove(musica);
+
+            _dbContext.SaveChanges();
+
+            return NoContent();
         }
     }
 }
