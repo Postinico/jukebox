@@ -57,7 +57,7 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public IActionResult ObterId(long id)
+        public IActionResult ObterId(Guid id)
         {
             var genero = _dbContext.Generos.SingleOrDefault(c => c.Id == id);
 
@@ -87,9 +87,7 @@ namespace jukebox.backend.Controllers
                 return BadRequest(new ResultViewModel(false, _validador.Validate(generoVM).Errors[0].ErrorMessage, generoVM));
             }
 
-            Genero genero = new();
-
-            genero.Titulo = generoVM.Titulo;
+            Genero genero = new Genero(Guid.NewGuid(), generoVM.Titulo);
 
             _dbContext.Generos.Add(genero);
 
@@ -114,7 +112,7 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public IActionResult Alterar(long id, [FromBody] PostGeneroInputModel generoVM)
+        public IActionResult Alterar(Guid id, [FromBody] PostGeneroInputModel generoVM)
         {
             var genero = _dbContext.Generos
                 .SingleOrDefault(c => c.Id == id);
@@ -143,7 +141,7 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public IActionResult Excluir(long id)
+        public IActionResult Excluir(Guid id)
         {
             var genero = _dbContext.Generos.SingleOrDefault(c => c.Id == id);
 

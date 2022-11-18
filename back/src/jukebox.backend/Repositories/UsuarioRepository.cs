@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace jukebox.backend.Repositories
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public static class UsuarioRepository
     {
-        public Usuario Obter(string email, string senha)
+        public static Usuario Obter(string email, string senha)
         {
             var usuarios = new List<Usuario>();
 

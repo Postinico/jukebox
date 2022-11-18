@@ -1,13 +1,12 @@
 ﻿using jukebox.backend.InputModels;
 using jukebox.backend.Persistence;
 using jukebox.backend.Repositories;
-
-using System.Net;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace jukebox.backend.Controllers
 {
@@ -17,13 +16,9 @@ namespace jukebox.backend.Controllers
     {
         private readonly JukeboxDbContext _dbContext;
 
-        private readonly IUsuarioRepository _usuarioRepository;
-
-        public AutenticarController(IConfiguration configuration, JukeboxDbContext dbContext, IUsuarioRepository usuarioRepository)
+        public AutenticarController(IConfiguration configuration, JukeboxDbContext dbContext)
         {
             _dbContext = dbContext;
-
-            _usuarioRepository = usuarioRepository;
         }
 
         /// <summary>
@@ -42,7 +37,7 @@ namespace jukebox.backend.Controllers
                  x.Senha.ToLower() == model.Senha.ToLower()).FirstOrDefault();
 
             if (usuario == null)
-                usuario = _usuarioRepository.Obter(model.Email, model.Senha);
+                usuario = UsuarioRepository.Obter(model.Email, model.Senha);
 
             if (usuario == null)
                 return NotFound(new { message = "Usuário ou senha inválidos" });

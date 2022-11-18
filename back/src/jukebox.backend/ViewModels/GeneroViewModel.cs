@@ -1,14 +1,16 @@
-﻿namespace jukebox.backend.ViewModels
+﻿using System;
+
+namespace jukebox.backend.ViewModels
 {
     public class GeneroViewModel
     {
-        public GeneroViewModel(long id, string titulo)
+        public GeneroViewModel(Guid id, string titulo)
         {
             Id = id;
             Titulo = titulo;
         }
 
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Titulo { get; set; }
     }
