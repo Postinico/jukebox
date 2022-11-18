@@ -98,7 +98,7 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public IActionResult ObterGeneroId(long generoId)
+        public IActionResult ObterGeneroId(Guid generoId)
         {
             var albuns = _dbContext.Albuns.Where(c => c.GeneroId == generoId).Include(f => f.Genero).ToList();
 

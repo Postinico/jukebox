@@ -1,4 +1,6 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
+using jukebox.backend.Models;
 using jukebox.backend.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -103,6 +105,11 @@ namespace jukebox.backend
             services.AddMvc()
                .AddFluentValidation(fvc =>
                            fvc.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+            services.AddScoped<IValidator<Genero>, GeneroValidador>();
+
+            // Add framework services.
+            services.AddMvc();
         }
 
         // Este método é chamado pelo tempo de execução. Use este método para configurar o pipeline de solicitação HTTP.

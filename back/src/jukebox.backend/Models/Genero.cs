@@ -4,45 +4,35 @@ using System;
 
 namespace jukebox.backend.Models
 {
-    public class Genero : ValidationResult
+    public class Genero
     {
-        public Genero() { }
+        protected Genero() { }
+
         public Genero(Guid id, string titulo)
         {
             Id = id;
             Titulo = titulo;
 
-            CheckInvariants(this, new GeneroValidador());
+            ValidationResult = ValidarDomain(this, new GeneroValidador());
         }
 
         public Guid Id { get; private set; }
 
         public string Titulo { get; private set; }
-        public virtual bool Valid { get; private set; }
 
         public void Update(string titulo)
         {
             Titulo = titulo;
         }
 
-        protected bool CheckInvariants<T>(T aggregate, AbstractValidator<T> validator)
+        private ValidationResult ValidarDomain<T>(T domain, AbstractValidator<T> validator)
         {
-            ValidationResult validationResult = validator.Validate(aggregate);
-            for (int j = 0; j < validationResult.Errors.Count; j++)
-            {
-                ValidationResult.Errors.Add(validationResult.Errors[j]);
-            }
+            ValidationResult validationResult = validator.Validate(domain);
 
-            Valid = ValidationResult.IsValid;
-            if (!Valid)
-            {
-                return false;
-            }
-
-            return true;
+            return validationResult;
         }
-
-        public virtual ValidationResult ValidationResult { get; private set; }
+        
+        public ValidationResult ValidationResult { get; private set; }
     }
 
     public class GeneroValidador : AbstractValidator<Genero>

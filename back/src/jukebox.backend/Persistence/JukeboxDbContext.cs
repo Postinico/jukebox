@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation.Results;
 
 namespace jukebox.backend.Persistence
 {
@@ -21,6 +22,7 @@ namespace jukebox.backend.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<ValidationResult>();
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

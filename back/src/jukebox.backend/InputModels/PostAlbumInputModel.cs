@@ -27,7 +27,7 @@ namespace jukebox.backend.InputModels
         /// Genero Id Guid
         /// </summary>
         /// <example>23e4567-e89b-12d3-a456-426655440000</example>
-        public long GeneroId { get; set; }
+        public Guid GeneroId { get; set; }
     }
 
     public class PostAlbumInputModelValidador : AbstractValidator<PostAlbumInputModel>

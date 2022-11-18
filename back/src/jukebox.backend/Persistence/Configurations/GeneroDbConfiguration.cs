@@ -11,6 +11,7 @@ namespace jukebox.backend.Persistence.Configurations
         {
             builder
                 .HasKey(c => c.Id);
+
         }
     }
 }

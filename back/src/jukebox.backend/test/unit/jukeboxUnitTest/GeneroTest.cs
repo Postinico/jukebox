@@ -29,23 +29,23 @@ namespace jukeboxUnitTest
 
             //Assert
             sut.Should().NotBeNull("Objeto não pode ser nulo");
-            sut.ValidationResult.Should().Be(true, "Objeto tem que ser valido");
+            sut.Id.Should().NotBeEmpty("Id não pode ser vazio");
+            sut.ValidationResult.IsValid.Should().Be(true, "Objeto tem que ser valido");
         }
 
-        [Theory(DisplayName = "Criar falha key")]
+        [Theory(DisplayName = "Criar falha titulo")]
         [Trait(CATEGORY_NAME, CATEGORY_VALEU)]
-        //[InlineAutoData(null)]
         [InlineData("")]
         [InlineData("A")]
         [InlineData("AB")]
-        public void Criar_genero_falha_titulo(string titulo)
+        public void Criar_falha_titulo(string titulo)
         {
             //Act
             var sut = _generoFixture.GeneroInValido(titulo: titulo);
 
             //Assert
             sut.Should().NotBeNull("Objeto não pode ser nulo");
-            sut.ValidationResult.Should().Be(false, "Objeto tem que ser invalido");
+            sut.ValidationResult.IsValid.Should().Be(false, "Objeto tem que ser invalido");
             Assert.DoesNotContain(sut.ValidationResult.Errors, x => x.PropertyName != "Titulo");
         }
     }
