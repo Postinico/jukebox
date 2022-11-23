@@ -1,6 +1,7 @@
 ﻿using jukebox.backend.InputModels;
 using jukebox.backend.Persistence;
 using jukebox.backend.Repositories;
+using jukebox.backend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -44,11 +45,16 @@ namespace jukebox.backend.Controllers
 
             var token = TokenService.GenerateToken(usuario);
 
-            usuario.Senha = "";
+            var autenticarViewModel = new AutenticarViewModel
+                (
+                   usuario.Nome,
+                   usuario.Email,
+                   usuario.Funcao
+                );
 
             return Ok(new
             {
-                usuario = usuario,
+                usuarioAtivo = autenticarViewModel,
                 token = token
             });
         }

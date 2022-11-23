@@ -15,10 +15,11 @@ namespace jukeboxUnitTest.Fixture
             var album = new Faker<Album>("pt_BR")
                  .CustomInstantiator(f => new Album
                  (
-                     titulo: f.Music.Random.String(),
-                     descricao: f.Music.Random.String(),
-                     capaUrl: f.Music.Random.String(),
-                     generoId: f.Music.Random.Guid()
+                     id: Guid.NewGuid(),
+                     titulo: f.Random.String(30),
+                     descricao: f.Random.String(30),
+                     capaUrl: f.Random.String(30),
+                     generoId: f.Random.Guid()
                   ));
 
             return album;
@@ -26,6 +27,7 @@ namespace jukeboxUnitTest.Fixture
 
         public Album AlbumInValido
         (
+            Guid? id = null,
             string? titulo = null,
             string? descricao = null,
             string? capaUrl = null,
@@ -34,6 +36,7 @@ namespace jukeboxUnitTest.Fixture
         {
             return new Album
             (
+                id == null ? Guid.NewGuid() : id.Value,
                 titulo == null ? "testeUnitValido" : titulo,
                 descricao == null ? "testeUnitValido" : descricao,
                 capaUrl == null ? "testeUnitValido" : capaUrl,

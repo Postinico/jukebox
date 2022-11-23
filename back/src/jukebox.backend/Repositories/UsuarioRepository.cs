@@ -11,7 +11,15 @@ namespace jukebox.backend.Repositories
         {
             var usuarios = new List<Usuario>();
 
-            usuarios.Add(new Usuario { UsuarioId = Guid.NewGuid(), Email = "postinico15@gmail.com", Nome = "Guilherme Postinico", Senha = "123456", Funcao = "gerente" });
+            usuarios.Add(new Usuario
+                (
+                    id:Guid.NewGuid(),
+                    perfilId:Guid.NewGuid(),
+                    nome:"Guilherme Postinico",
+                    email:"postinico15@gmail.com", 
+                    senha:"123456", 
+                    funcao:"gerente"
+                ));
 
             var usuario = usuarios.Where
                 (x =>

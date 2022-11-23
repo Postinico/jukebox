@@ -6,8 +6,10 @@ namespace jukebox.backend.Models
 {
     public class Album
     {
-        public Album(string titulo, string descricao, string capaUrl, Guid generoId)
+        public Album(Guid id, string titulo, string descricao, string capaUrl, Guid generoId)
         {
+            Id = id;
+
             Titulo = titulo;
 
             Descricao = descricao;
@@ -34,7 +36,6 @@ namespace jukebox.backend.Models
         public Guid GeneroId { get; set; }
 
         public Genero Genero { get; set; }
-
 
 
         private ValidationResult ValidarDomain<T>(T domain, AbstractValidator<T> validator)

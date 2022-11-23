@@ -10,7 +10,7 @@ namespace jukebox.backend.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
             builder
-               .HasKey(c => c.UsuarioId);
+               .HasKey(c => c.Id);
         }
     }
 }

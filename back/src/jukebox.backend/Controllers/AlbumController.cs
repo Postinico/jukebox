@@ -50,6 +50,7 @@ namespace jukebox.backend.Controllers
             var albumViewModel = albuns
                 .Select(c => new AlbumViewModel(c.Id, c.Titulo, c.Descricao, c.CapaUrl, c.Votos, c.Genero.Titulo))
                 .ToList();
+
             Console.WriteLine(String.Format("Autenticado - {0}", User.Identity.Name));
             Console.WriteLine(String.Format("Autenticado - {0}", User.Identity.Name));
             return Ok(albumViewModel);
@@ -140,7 +141,7 @@ namespace jukebox.backend.Controllers
 
             if (genero != null)
             {
-                var album = new Album(albumIM.Titulo, albumIM.Descricao, albumIM.CapaUrl, albumIM.GeneroId);
+                var album = new Album(Guid.NewGuid(), albumIM.Titulo, albumIM.Descricao, albumIM.CapaUrl, albumIM.GeneroId);
 
                 _dbContext.Albuns.Add(album);
 

@@ -5,6 +5,7 @@ using jukebox.backend.Persistence;
 using jukebox.backend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Net;
@@ -41,12 +42,17 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult Obter()
         {
-            var musicas = _dbContext.Musicas;
+            var musicas = _dbContext.Musicas
+                .Include(f => f.Album);
 
             if (musicas == null)
                 return NotFound();
 
-            return Ok(musicas);
+            var musicaViewModel = musicas
+                .Select(c => new MusicaViewModel(c.Id, c.Nome, c.YoutubeUrl, c.Album.Titulo))
+                .ToList();
+
+            return Ok(musicaViewModel);
         }
 
         /// <summary>
@@ -68,6 +74,14 @@ namespace jukebox.backend.Controllers
             if (musica == null)
                 return NotFound();
 
+            var musicaViewModel = new MusicaViewModel
+                (
+                    musica.Id,
+                    musica.Nome,
+                    musica.YoutubeUrl,
+                    musica.Album.Titulo
+                );
+
             return Ok(musica);
         }
 
@@ -85,12 +99,18 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult ObterAlbumId(Guid albumId)
         {
-            var musicas = _dbContext.Musicas.Where(c => c.AlbumId == albumId).ToList();
+            var musicas = _dbContext.Musicas.Where(c => c.AlbumId == albumId)
+                .Include(f => f.Album)
+                .ToList();
 
             if (musicas == null)
                 return NotFound();
 
-            return Ok(musicas);
+            var musicaViewModel = musicas
+                .Select(c => new MusicaViewModel(c.Id, c.Nome, c.YoutubeUrl, c.Album.Titulo))
+                .ToList();
+
+            return Ok(musicaViewModel);
         }
 
         /// <summary>
@@ -119,7 +139,7 @@ namespace jukebox.backend.Controllers
             var album = _dbContext.Albuns.Find(musicaIM.AlbumId);
             if (album != null)
             {
-                var musica = new Musica(musicaIM.Nome, musicaIM.YoutubeUrl, musicaIM.AlbumId);
+                var musica = new Musica(Guid.NewGuid(), musicaIM.Nome, musicaIM.YoutubeUrl, musicaIM.AlbumId);
 
                 _dbContext.Musicas.Add(musica);
                 _dbContext.SaveChanges();

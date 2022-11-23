@@ -44,7 +44,7 @@ namespace jukebox.backend.Controllers
             var usuarios = _dbContext.Usuarios;
 
             var usuariosView = usuarios
-                .Select(c => new UsuarioViewModel(c.UsuarioId, c.Nome, c.Email, c.Senha, c.Funcao))
+                .Select(c => new UsuarioViewModel(c.Id, c.Nome, c.Email, c.Senha, c.Funcao))
                 .ToList();
 
             return Ok(usuariosView);
@@ -63,11 +63,11 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult ObterId(Guid id)
         {
-            var usuario = _dbContext.Usuarios.SingleOrDefault(c => c.UsuarioId == id);
+            var usuario = _dbContext.Usuarios.SingleOrDefault(c => c.Id == id);
 
             if (usuario == null) return NotFound();
 
-            var usuarioView = new UsuarioViewModel(usuario.UsuarioId, usuario.Nome, usuario.Email, usuario.Senha, usuario.Funcao);
+            var usuarioView = new UsuarioViewModel(usuario.Id, usuario.Nome, usuario.Email, usuario.Senha, usuario.Funcao);
 
             return Ok(usuarioView);
         }
@@ -97,20 +97,21 @@ namespace jukebox.backend.Controllers
             if (!_validador.Validate(usuarioIM).IsValid)
                 return BadRequest(new ResultViewModel(false, _validador.Validate(usuarioIM).Errors[0].ErrorMessage, usuarioIM));
 
-            Usuario usuario = new();
-
-            usuario.Nome = usuarioIM.Nome;
-            usuario.Email = usuarioIM.Email;
-            usuario.Senha = usuarioIM.Senha;
-            usuario.Funcao = perfil.Titulo;
-            usuario.PerfilId = usuarioIM.PerfilId;
+            Usuario usuario = new Usuario(
+                id: Guid.NewGuid(),
+                nome: usuarioIM.Nome,
+                email: usuarioIM.Email,
+                senha: usuarioIM.Senha,
+                funcao: perfil.Titulo,
+                perfilId: usuarioIM.PerfilId
+            );
 
             _dbContext.Usuarios.Add(usuario);
 
             _dbContext.SaveChanges();
 
             return CreatedAtAction(nameof(Obter),
-                new { id = usuario.UsuarioId },
+                new { id = usuario.Id },
                 usuarioIM
                 );
         }
@@ -144,7 +145,7 @@ namespace jukebox.backend.Controllers
             }
 
             var usuario = _dbContext.Usuarios
-                .SingleOrDefault(c => c.UsuarioId == id);
+                .SingleOrDefault(c => c.Id == id);
 
             if (usuario == null) return NotFound();
 
@@ -168,7 +169,7 @@ namespace jukebox.backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public IActionResult Excluir(Guid id)
         {
-            var usuario = _dbContext.Usuarios.SingleOrDefault(c => c.UsuarioId == id);
+            var usuario = _dbContext.Usuarios.SingleOrDefault(c => c.Id == id);
 
             if (usuario == null) return NotFound();
 
