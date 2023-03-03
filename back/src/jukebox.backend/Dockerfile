@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 
-COPY ["./jukebox.backend.csproj", "src/api/"]
+COPY ["jukebox.backend.csproj", "src/api/"]
 
 
 RUN dotnet restore "src/api/jukebox.backend.csproj"
