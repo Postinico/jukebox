@@ -11,7 +11,7 @@ ENV TZ=America/Sao_Paulo
 FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 WORKDIR /src
 
-COPY ["jukebox.backend.csproj", "src/api/"]
+COPY ["./back/src/jukebox.backend/jukebox.backend.csproj", "src/api/"]
 
 
 RUN dotnet restore "src/api/jukebox.backend.csproj"
