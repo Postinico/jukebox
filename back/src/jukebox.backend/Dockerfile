@@ -15,7 +15,7 @@ COPY ["jukebox.backend.csproj", "src/jukebox.backend.api/"]
 
 RUN dotnet restore "src/jukebox.backend.api/jukebox.backend.csproj"
 COPY . .
-WORKDIR "/src/src/jukebox.backend.api"
+WORKDIR "/src/jukebox.backend.api"
 RUN dotnet build "jukebox.backend.api.csproj" -c Release -o /app/build
 
 FROM build AS publish
