@@ -3,7 +3,7 @@ trigger:
     include:
     - develop
     
-pool: t
+pool: 
   vmImage: 'ubuntu-latest'
 
 variables:
