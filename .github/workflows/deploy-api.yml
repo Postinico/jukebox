@@ -15,13 +15,13 @@ jobs:
     steps:
     - name: Login to Docker Hub
       uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-      
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    
     - name: Build and push register app
-      uses: docker/build-push-action@v3
       with:
        push: true
        file: ./back/src/jukebox.backend/Dockerfile
