@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY *.csproj ./
 
-RUN dotnet restore "./jukebox.backend.csproj"
+RUN dotnet restore
 
 # Build da aplicacao
 COPY . ./
