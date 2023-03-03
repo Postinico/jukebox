@@ -25,4 +25,4 @@ jobs:
       with:
        push: true
        file: ./back/src/jukebox.backend/Dockerfile
-       tags: ${{ secrets.DOCKERHUB_USERNAME }}/api.jukebox:latest
+       tags: postinico/api.jukebox:latest
