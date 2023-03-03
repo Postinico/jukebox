@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 WORKDIR /app
+RUN apk add --no-cache icu-libs icu-data-full
 
 COPY *.csproj ./
 
