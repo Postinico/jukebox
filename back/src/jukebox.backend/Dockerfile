@@ -10,12 +10,12 @@ ENV TZ=America/Sao_Paulo
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 WORKDIR /src
 
-COPY ["jukebox.backend.csproj", "src/jukebox.backend.api/"]
+COPY ["jukebox.backend.csproj", "src/api/"]
 
 
-RUN dotnet restore "src/jukebox.backend.api/jukebox.backend.csproj"
+RUN dotnet restore "src/api/jukebox.backend.csproj"
 COPY . .
-WORKDIR "/src/jukebox.backend.api"
+WORKDIR "/src/src/api"
 RUN dotnet build "jukebox.backend.api.csproj" -c Release -o /app/build
 
 FROM build AS publish
