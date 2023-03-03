@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY *.csproj ./
 
-RUN dotnet restore
+RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false -nowarn:msb3202,nu150
 
 # Build da aplicacao
 COPY . ./
