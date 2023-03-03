@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: API Docker Image CI
 
 on:
   push:
@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./back/src/jukebox.backend/Dockerfile --file Dockerfile --tag api:$(date +%s)
+      run: docker build /back/src/jukebox.backend/Dockerfile --file Dockerfile --tag api:$(date +%s)
