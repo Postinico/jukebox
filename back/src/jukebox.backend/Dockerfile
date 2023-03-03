@@ -1,3 +1,5 @@
+exportar DOCKER_BUILDKIT=0
+exportar COMPOSE_DOCKER_CLI_BUILD=0
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 WORKDIR /src
