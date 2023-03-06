@@ -13,16 +13,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      env:
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    
-    - name: Build and push register app
-      with:
-       push: true
-       file: ./back/src/jukebox.backend/Dockerfile
-       tags: postinico/api.jukebox:latest
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::$
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${ DOCKER_HUB_USERNAME }
+          password: ${ DOCKER_HUB_ACCESS_TOKEN }
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          file: ./back/src/jukebox.backend/Dockerfile
+          tags: postinico/api.jukebox:latest
