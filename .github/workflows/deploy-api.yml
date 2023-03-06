@@ -31,6 +31,6 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: postinico/api.jukebox:latest
+          tags: api.jukebox:latest
       
       
