@@ -23,7 +23,7 @@ jobs:
         uses: docker/build-push-action@v4  
         with:
           push: true
-          file: cd ./back/src/jukebox.backend/Dockerfile
+          file: /jukebox/back/src/jukebox.backend/Dockerfile
           tags: postinico/api.jukebox:latest
       
       
