@@ -18,6 +18,8 @@ jobs:
         env:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        run: |
+          echo $secrets.DOCKER_HUB_USERNAME
           
       - name: Build and push
         id: docker_build
