@@ -1,19 +1,18 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+
+COPY ["jukebox.backend.csproj", "src/api/"]
+
+
+RUN dotnet restore "src/api/jukebox.backend.csproj"
+COPY . .
+WORKDIR "/src/src/api"
+RUN dotnet build "jukebox.backend.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "jukebox.backend.csproj" -c Release -o /app/publish
+
+FROM base AS final
 WORKDIR /app
-
-# Copiar csproj e restaurar dependencias
-COPY *.csproj ./
-RUN dotnet restore
-
-# Build da aplicacao
-COPY . ./
-RUN dotnet publish -c Release -o out
-
-# Build da imagem
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
-
-
-WORKDIR /app
-COPY --from=build-env /app/out .
-EXPOSE 80
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "jukebox.backend.dll"]
