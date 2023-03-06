@@ -27,6 +27,6 @@ jobs:
         with:
           context: .
           push: true
-          file: ./back/src/jukebox.backend/Dockerfile
+          file: /back/src/jukebox.backend/Dockerfile
           tags: postinico/api.jukebox:latest
       
