@@ -22,8 +22,8 @@ jobs:
       - name: Login DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          username: postinico
+          password: dckr_pat_Il1YC4AGImhgFxoHqu4NDTWhGLw
         
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -31,6 +31,12 @@ jobs:
         with:
           images: postinico/api.jukebox
           
-      
+      - name: Build and push
+        uses: docker/build-push-action@v2  
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: postinico/api.jukebox:latest
       
       
