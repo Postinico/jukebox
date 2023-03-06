@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 
 # Copiar csproj e restaurar dependencias
@@ -14,5 +14,5 @@ RUN dotnet publish "jukebox.backend.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/publish .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "jukebox.backend.dll"]
