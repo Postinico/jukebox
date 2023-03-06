@@ -21,6 +21,9 @@ jobs:
         
       - name: Build and push  
         uses: docker/build-push-action@v4  
-        run: cd ./back/src/jukebox.backend/Dockerfile  docker build ... -t postinico/api.jukebox:1.0.0
+        with:
+          push: true
+          file: cd ./back/src/jukebox.backend/Dockerfile
+          tags: postinico/api.jukebox:latest
       
       
