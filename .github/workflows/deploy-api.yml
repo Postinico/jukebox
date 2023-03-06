@@ -34,6 +34,8 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: api.jukebox:latest
+          tags: postinico/api.jukebox:latest
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       
       
