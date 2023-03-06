@@ -2,8 +2,8 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 WORKDIR /app
 
 # Copiar csproj e restaurar dependencias
-COPY *.csproj ./
-RUN dotnet restore
+COPY ["back/src/jukebox.backend/jukebox.backend.csproj", "src/jukebox.backend/"]
+RUN dotnet restore src/jukebox.backend/jukebox.backend.csproj
 
 # Build da aplicacao
 COPY . ./
