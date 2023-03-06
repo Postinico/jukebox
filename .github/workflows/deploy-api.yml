@@ -31,7 +31,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4  
         with:
-          context: .
+          context: ../.
+          dockerfile: Dockerfile
           push: true
           tags: postinico/api.jukebox:latest
       
