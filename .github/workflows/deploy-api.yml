@@ -37,6 +37,7 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: postinico/api.jukebox:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       
       
